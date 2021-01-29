@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useContext, useState } from "react";
+import "./App.css";
+
+const PostStore = React.createContext();
+
+const PostList = () => {
+  const data = useContext(PostStore);
+  console.log(data);
+  return <div onClick={()=>data.setText('aviral')}>PostList</div>;
+};
+
+const PostDetail = () => {
+  return <div>PostDetail</div>;
+};
 
 function App() {
+  const [text, setText] = useState('default');
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PostStore.Provider value={{ text, setText }}>
+        <PostList />
+      </PostStore.Provider>
+      <PostDetail />
     </div>
   );
 }
